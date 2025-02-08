@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import {ApiProperty} from '@nestjs/swagger';
 import {ROLE} from '../../../common/enums/role.enum';
-import {Task} from '../../task/entities/task.entity';
+import {Task} from '../../task/entity/task.entity';
 
 
 @Entity({name: 'users'})

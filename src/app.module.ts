@@ -6,7 +6,7 @@ import {AuthModule} from './modules/auth/auth.module';
 import * as process from 'node:process';
 import {UserModule} from './modules/user/user.module';
 import {TaskModule} from './modules/task/task.module';
-import {Task} from './modules/task/entities/task.entity';
+import {Task} from './modules/task/entity/task.entity';
 
 
 @Module({

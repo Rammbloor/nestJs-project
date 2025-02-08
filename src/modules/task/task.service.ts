@@ -1,7 +1,7 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import {CreateTaskDto} from './dto/create-task.dto';
 import {UpdateTaskDto} from './dto/update-task.dto';
-import {Task} from './entities/task.entity';
+import {Task} from './entity/task.entity';
 import {Repository} from 'typeorm';
 import {InjectRepository} from '@nestjs/typeorm';
 import {IJWTAuthPayload} from '../auth/interfaces/jwt-auth-payload.interface';

@@ -4,7 +4,7 @@ import { TaskController } from './task.controller';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {User} from '../user/entity/user.entity';
 import {UserService} from '../user/user.service';
-import {Task} from './entities/task.entity';
+import {Task} from './entity/task.entity';
 
 @Module({
   controllers: [TaskController],
