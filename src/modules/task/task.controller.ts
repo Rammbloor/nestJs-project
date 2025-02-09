@@ -13,7 +13,7 @@ import {
 import {TaskService} from './task.service';
 import {CreateTaskDto} from './dto/create-task.dto';
 import {UpdateTaskDto} from './dto/update-task.dto';
-import {ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBody, ApiConsumes, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Task} from './entity/task.entity';
 import {RolesGuard} from '../auth/guards/role.guard';
 import {JwtAuthGuard} from '../auth/guards/jwt-auth.guard';
@@ -45,13 +45,17 @@ export class TaskController {
 
 
     @ApiOperation({summary: 'Загрузка фото'})
+    @ApiConsumes('multipart/form-data')
+    @ApiBody({description: 'Файл изображения для загрузки', type: 'multipart/form-data', required: true, schema: {type: 'object', properties: {file: {}}}})
     @ApiResponse({status: 200, description: 'Фото загружено', type: Task})
     @Post(':id/upload')
-    @UseInterceptors(FileInterceptor('file', {storage: memoryStorage(),limits: {
+    @UseInterceptors(FileInterceptor('file', {
+        storage: memoryStorage(), limits: {
             fileSize: 10 * 1024 * 1024
-        },}))
+        },
+    }))
     async uploadPhoto(@Param('id') id: number, @UploadedFile() file: Express.Multer.File,) {
-        return  this.taskService.uploadPhoto(id, file);
+        return this.taskService.uploadPhoto(id, file);
     }
 
     @ApiOperation({summary: 'Получить все задачи'})
