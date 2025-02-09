@@ -8,6 +8,8 @@ import {UserModule} from './modules/user/user.module';
 import {TaskModule} from './modules/task/task.module';
 import {Task} from './modules/task/entity/task.entity';
 import { FileModule } from './modules/file/file.module';
+import { ProjectModule } from './modules/project/project.module';
+import {Project} from './modules/project/entities/project.entity';
 
 
 
@@ -25,7 +27,7 @@ import { FileModule } from './modules/file/file.module';
             username: process.env.POSTGRES_USERNAME,
             password: process.env.POSTGRES_PASSWORD,
             database: process.env.POSTGRES_DB,
-            entities: [User, Task],
+            entities: [User, Task,Project],
             synchronize: false,
             migrations: ['dist/migrations/*.js'],
             autoLoadEntities: true,
@@ -36,6 +38,7 @@ import { FileModule } from './modules/file/file.module';
         AuthModule,
         TaskModule,
         FileModule,
+        ProjectModule,
 
 
     ]

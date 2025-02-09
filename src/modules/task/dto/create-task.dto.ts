@@ -1,5 +1,5 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {Column} from 'typeorm';
+
 
 
 export class CreateTaskDto {
@@ -12,7 +12,10 @@ export class CreateTaskDto {
     description?: string;
 
     @ApiProperty({example: 'https://images.app.goo.gl/', description: 'URL фотографии'})
-    urlPhoto: string;
+    urlFile: string;
+
+    @ApiProperty({example: '6e8f4e02-c91c-465f-b22d-7f102fca381b', description: 'id проекта'})
+    projectId?: string
 
     @ApiProperty({example: 'false', description: 'Задача не выполнена'})
     isCompleted?: boolean;

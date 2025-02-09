@@ -30,7 +30,7 @@ export class UserService {
         return this.userRepository.findOne({where: {email}})
     }
 
-    public async getById(id: number): Promise<User> {
+    public async getById(id: string): Promise<User> {
         const user = await this.userRepository.findOne({where: {id}})
         if (!user) {
             throw new NotFoundException('Пользователь не найден')
@@ -46,7 +46,7 @@ export class UserService {
         return users
     }
 
-    public async update(id: number, userDto: UpdateUserDto): Promise<User> {
+    public async update(id: string, userDto: UpdateUserDto): Promise<User> {
 
         let user = await this.userRepository.findOne({where: {id}})
         if (!user) {
@@ -57,7 +57,7 @@ export class UserService {
     }
 
 
-    public async delete(id: number): Promise<boolean> {
+    public async delete(id: string): Promise<boolean> {
         const user = await this.userRepository.findOne({where: {id}})
         if (!user) {
             throw new NotFoundException('Пользователь не найден');

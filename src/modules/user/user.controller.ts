@@ -10,7 +10,7 @@ import {Roles} from '../../common/decorators/role.decorator';
 import {GetJWTPayload} from '../../common/decorators/get-user-payload.decorator';
 import {IJWTAuthPayload} from '../auth/interfaces/jwt-auth-payload.interface';
 
-@ApiTags('Пользователи')
+@ApiTags('Пользователь')
 @Controller('user')
 export class UserController {
     constructor(private readonly usersService: UserService) {

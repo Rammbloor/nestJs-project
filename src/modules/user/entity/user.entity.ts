@@ -8,13 +8,14 @@ import {
 import {ApiProperty} from '@nestjs/swagger';
 import {ROLE} from '../../../common/enums/role.enum';
 import {Task} from '../../task/entity/task.entity';
+import {Project} from '../../project/entities/project.entity';
 
 
 @Entity({name: 'users'})
 export class User {
-    @ApiProperty({example: 1, description: 'Уникальный идентификатор'})
-    @PrimaryGeneratedColumn()
-    id: number;
+    @ApiProperty({example: '6e8f4e02-c91c-465f-b22d-7f102fca381b', description: 'Уникальный идентификатор'})
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @ApiProperty({example: 'user@mail.ru', description: 'Почтовый адрес'})
     @Column({unique: true})
@@ -44,4 +45,7 @@ export class User {
 
     @OneToMany(() => Task, (task) => task.user)
     tasks: Task []
+
+    @OneToMany(() => Project, (project) => project.user)
+    projects: Project []
 }

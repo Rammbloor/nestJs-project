@@ -1,6 +1,6 @@
 import {TRolesKey} from '../../../common/enums/role.enum';
 
 export interface IJWTAuthPayload {
-    id: number;
+    id: string;
     role: TRolesKey;
 }
