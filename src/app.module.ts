@@ -24,8 +24,10 @@ import {Task} from './modules/task/entity/task.entity';
             password: process.env.POSTGRES_PASSWORD,
             database: process.env.POSTGRES_DB,
             entities: [User, Task],
-            synchronize: true,
+            synchronize: false,
+            migrations: ['dist/migrations/*.js'],
             autoLoadEntities: true,
+            migrationsRun: true,
 
         }),
         UserModule,

@@ -20,6 +20,7 @@ export class User {
     @Column({unique: true})
     email: string;
 
+    @ApiProperty({example: 'user', description: 'Роль пользователя'})
     @Column({unique: true})
     role: ROLE
 

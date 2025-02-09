@@ -35,6 +35,10 @@ export class Task {
     @Column({default: false,name:'is_completed'})
     isCompleted: boolean;
 
+    @ApiProperty({example: 'https://images.app.goo.gl/', description: 'URL фотографии'})
+    @Column({ nullable: true,name:'url_photo' })
+    urlPhoto: string;
+
     @CreateDateColumn({type: 'timestamp', name: 'created_at'})
     createdAt: Date;
 

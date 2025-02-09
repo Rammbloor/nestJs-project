@@ -4,7 +4,7 @@ import * as bcrypt from 'bcryptjs'
 import {User} from '../user/entity/user.entity';
 import {CreateUserDto} from '../user/dto/create-user.dto';
 import {UserService} from '../user/user.service';
-import {ROLE} from '../../common/enums/role.enum';
+
 
 @Injectable()
 export class AuthService {
