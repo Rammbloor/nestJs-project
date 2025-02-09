@@ -39,24 +39,9 @@ export class TaskController {
     @Roles(ROLE.USER)
     @Post()
     create(@GetJWTPayload() jwtPayload: IJWTAuthPayload, @Body() createTaskDto: CreateTaskDto) {
-
         return this.taskService.create(createTaskDto, jwtPayload.id);
     }
 
-
-    @ApiOperation({summary: 'Загрузка фото'})
-    @ApiConsumes('multipart/form-data')
-    @ApiBody({description: 'Файл изображения для загрузки', type: 'multipart/form-data', required: true, schema: {type: 'object', properties: {file: {}}}})
-    @ApiResponse({status: 200, description: 'Фото загружено', type: Task})
-    @Post(':id/upload')
-    @UseInterceptors(FileInterceptor('file', {
-        storage: memoryStorage(), limits: {
-            fileSize: 10 * 1024 * 1024
-        },
-    }))
-    async uploadPhoto(@Param('id') id: number, @UploadedFile() file: Express.Multer.File,) {
-        return this.taskService.uploadPhoto(id, file);
-    }
 
     @ApiOperation({summary: 'Получить все задачи'})
     @ApiResponse({status: 200, description: 'Пользователи получены', type: Task})

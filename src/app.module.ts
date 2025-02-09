@@ -7,6 +7,8 @@ import * as process from 'node:process';
 import {UserModule} from './modules/user/user.module';
 import {TaskModule} from './modules/task/task.module';
 import {Task} from './modules/task/entity/task.entity';
+import { FileModule } from './modules/file/file.module';
+
 
 
 @Module({
@@ -33,9 +35,10 @@ import {Task} from './modules/task/entity/task.entity';
         UserModule,
         AuthModule,
         TaskModule,
+        FileModule,
 
 
-    ],
+    ]
 })
 export class AppModule {
 }
