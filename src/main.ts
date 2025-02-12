@@ -3,12 +3,14 @@ import {NestFactory} from '@nestjs/core';
 import {AppModule} from './app.module';
 import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
 import * as express from 'express';
+import {RateLimitGuard} from './modules/auth/guards/rate-limit.guard';
 
 async function start() {
 
     const Port = process.env.PORT || 3000
 
     const app = await NestFactory.create(AppModule)
+    app.useGlobalGuards(new RateLimitGuard())
 
     const config = new DocumentBuilder().setTitle('Тренируюсь делать CRUD приложения')
         .setDescription('Базовые Crud действия')
@@ -18,8 +20,8 @@ async function start() {
     const document = SwaggerModule.createDocument(app, config)
     SwaggerModule.setup('/api/docs', app, document)
 
-    app.use(express.json({ limit: '10mb' }));
-    app.use(express.urlencoded({ limit: '10mb', extended: true }));
+    app.use(express.json({limit: '10mb'}));
+    app.use(express.urlencoded({limit: '10mb', extended: true}));
     await app.listen(Port, () => console.log(`Server is running on port ${Port}!`))
 
 }
