@@ -4,6 +4,8 @@ import {AppModule} from './app.module';
 import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
 import * as express from 'express';
 import {RateLimitGuard} from './modules/auth/guards/rate-limit.guard';
+import {LoggerService} from './common/logger/winston-logger.service';
+import {AllExceptionsFilter} from './common/filters/all-exceptions.filter';
 
 async function start() {
 
@@ -11,6 +13,9 @@ async function start() {
 
     const app = await NestFactory.create(AppModule)
     app.useGlobalGuards(new RateLimitGuard())
+
+    const logger = app.get(LoggerService);
+    app.useGlobalFilters(new AllExceptionsFilter(logger))
 
     const config = new DocumentBuilder().setTitle('Тренируюсь делать CRUD приложения')
         .setDescription('Базовые Crud действия')

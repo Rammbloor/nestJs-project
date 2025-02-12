@@ -7,6 +7,7 @@ export class CreateUserDto {
     @ApiProperty({example: 'Вася', description: 'Имя пользователя'})
     @Length(3, 11)
     @IsString()
+    @IsNotEmpty()
     name: string
 
     @ApiProperty({example: 'user@mail.ru', description: 'Почтовый адрес'})
@@ -21,6 +22,7 @@ export class CreateUserDto {
 
     @ApiProperty({example: '12345678', description: 'Пароль пользователя'})
     @MinLength(6)
+    @IsNotEmpty()
     @IsString()
     password: string
 
