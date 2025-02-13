@@ -17,7 +17,7 @@ export class FileService {
         })
     }
 
-    async uploadPhotoToB2(file: Express.Multer.File): Promise<string> {
+    async uploadFileToB2(file: Express.Multer.File): Promise<string> {
         const bucketName = process.env.B2_BUCKET_NAME;
         if (!bucketName) {
             throw new BadRequestException('Bucket name is not provided');
