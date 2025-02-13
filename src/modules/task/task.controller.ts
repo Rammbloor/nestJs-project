@@ -20,7 +20,7 @@ import {IJWTAuthPayload} from '../auth/interfaces/jwt-auth-payload.interface';
 import {ROLE} from '../../common/enums/role.enum';
 import {Roles} from '../../common/decorators/role.decorator';
 
-
+@UseGuards(JwtAuthGuard, RolesGuard)
 @ApiTags('Задачи')
 @Controller('task')
 export class TaskController {
@@ -29,47 +29,42 @@ export class TaskController {
 
     @ApiOperation({summary: 'Создание задачи'})
     @ApiResponse({status: 200, description: 'Задача создана', type: Task})
-    @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(ROLE.USER)
     @Post()
-    create(@GetJWTPayload() jwtPayload: IJWTAuthPayload, @Body() createTaskDto: CreateTaskDto) {
+    public async create(@GetJWTPayload() jwtPayload: IJWTAuthPayload, @Body() createTaskDto: CreateTaskDto) {
         return this.taskService.create(createTaskDto, jwtPayload.id);
     }
 
 
     @ApiOperation({summary: 'Получить все задачи'})
     @ApiResponse({status: 200, description: 'Пользователи получены', type: Task})
-    @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(ROLE.ADMIN)
     @Get()
-    async findAll() {
+    public async findAll() {
         return this.taskService.findAll();
     }
 
     @ApiOperation({summary: 'Получить задачу по id'})
     @ApiResponse({status: 200, description: 'Задача получена', type: Task})
-    @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(ROLE.USER)
     @Get(':id')
-    async findById(@Param('id') id: string,) {
+    public async findById(@Param('id') id: string,) {
         return this.taskService.findById(id)
     }
 
     @ApiOperation({summary: 'Обновить задачу'})
     @ApiResponse({status: 200, description: 'Задача обновлена', type: Task})
-    @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(ROLE.USER)
     @Patch(':id')
-    async update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
+    public async update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
         return this.taskService.update(id, updateTaskDto);
     }
 
     @ApiOperation({summary: 'Удаление задачи'})
-    @ApiResponse({status: 200, description: 'Задача удалена', type: Task})
-    @UseGuards(JwtAuthGuard, RolesGuard)
+    @ApiResponse({status: 200, description: 'Задача удалена'})
     @Roles(ROLE.USER)
     @Delete(':id')
-    async remove(@Param('id') id: string) {
+    public async delete(@Param('id') id: string) {
         return this.taskService.delete(id);
     }
 }

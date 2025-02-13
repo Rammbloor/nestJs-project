@@ -9,6 +9,7 @@ import {ApiProperty} from '@nestjs/swagger';
 import {ROLE} from '../../../common/enums/role.enum';
 import {Task} from '../../task/entity/task.entity';
 import {Project} from '../../project/entities/project.entity';
+import {Comment} from '../../comment/entities/comment.entity';
 
 
 @Entity({name: 'users'})
@@ -46,6 +47,12 @@ export class User {
     @OneToMany(() => Task, (task) => task.user)
     tasks: Task []
 
+    @OneToMany(() => Task, (task) => task.assignee)
+    assignedTasks: Task []
+
     @OneToMany(() => Project, (project) => project.user)
     projects: Project []
+
+    @OneToMany(() => Comment, (comment) => comment.user)
+    comments: Comment []
 }

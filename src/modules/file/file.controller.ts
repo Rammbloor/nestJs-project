@@ -20,7 +20,7 @@ export class FileController {
             fileSize: 10 * 1024 * 1024
         },
     }))
-    async uploadFileToB2( @UploadedFile() file: Express.Multer.File,) {
+    public async uploadFileToB2( @UploadedFile() file: Express.Multer.File,) {
         return this.fileService.uploadFileToB2( file);
     }
 }

@@ -7,10 +7,12 @@ import * as process from 'node:process';
 import {UserModule} from './modules/user/user.module';
 import {TaskModule} from './modules/task/task.module';
 import {Task} from './modules/task/entity/task.entity';
-import { FileModule } from './modules/file/file.module';
-import { ProjectModule } from './modules/project/project.module';
+import {FileModule} from './modules/file/file.module';
+import {ProjectModule} from './modules/project/project.module';
 import {Project} from './modules/project/entities/project.entity';
-
+import {CommentModule} from './modules/comment/comment.module';
+import {WinstonLoggerModule} from './common/logger/winston-logger.module';
+import {Comment} from './modules/comment/entities/comment.entity';
 
 
 @Module({
@@ -27,7 +29,7 @@ import {Project} from './modules/project/entities/project.entity';
             username: process.env.POSTGRES_USERNAME,
             password: process.env.POSTGRES_PASSWORD,
             database: process.env.POSTGRES_DB,
-            entities: [User, Task,Project],
+            entities: [User, Task, Project,Comment],
             synchronize: false,
             migrations: ['dist/migrations/*.js'],
             autoLoadEntities: true,
@@ -39,6 +41,8 @@ import {Project} from './modules/project/entities/project.entity';
         TaskModule,
         FileModule,
         ProjectModule,
+        CommentModule,
+        WinstonLoggerModule
 
 
     ]

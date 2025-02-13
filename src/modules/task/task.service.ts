@@ -17,7 +17,7 @@ export class TaskService {
     ) {
     }
 
-    async create(createTaskDto: CreateTaskDto, userId: string): Promise<Task> {
+    public async create(createTaskDto: CreateTaskDto, userId: string): Promise<Task> {
         const {projectId} = createTaskDto
         let project: Project | null = null
         if (projectId) {
@@ -26,15 +26,19 @@ export class TaskService {
                 throw new NotFoundException(`Project with ID ${projectId} not found`);
             }
         }
-        const task = this.taskRepository.create({...createTaskDto, userId: userId, projectId: projectId});
+        const task = this.taskRepository.create({
+            ...createTaskDto, userId: userId,
+            deadline: createTaskDto.deadline ? new Date(createTaskDto.deadline) : null
+        })
+
         return this.taskRepository.save(task);
     }
 
-    async findAll(): Promise<Task[]> {
+    public async findAll(): Promise<Task[]> {
         return this.taskRepository.find();
     }
 
-    async findById(id: string): Promise<Task> {
+    public async findById(id: string): Promise<Task> {
         const task = await this.taskRepository.findOne({where: {id}});
         if (!task) {
             throw new NotFoundException(`Task with ID ${id} not found`);
@@ -42,13 +46,13 @@ export class TaskService {
         return task;
     }
 
-    async update(id: string, updateTaskDto: UpdateTaskDto): Promise<Task> {
+    public async update(id: string, updateTaskDto: UpdateTaskDto): Promise<Task> {
         let task = await this.findById(id)
         task = this.taskRepository.merge(task, updateTaskDto);
         return this.taskRepository.save(task);
     }
 
-    async delete(id: string) {
+    public async delete(id: string) {
         let task = await this.findById(id)
         await this.taskRepository.remove(task);
         return true

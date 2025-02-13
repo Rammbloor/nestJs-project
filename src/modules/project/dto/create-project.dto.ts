@@ -1,5 +1,5 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {IsBoolean, IsNotEmpty, IsNumber, IsString} from 'class-validator';
+import {IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString} from 'class-validator';
 
 
 export class CreateProjectDto {
@@ -24,6 +24,7 @@ export class CreateProjectDto {
     isCompleted: boolean;
 
     @IsString()
+    @IsOptional()
     @ApiProperty({example: 'https://images.app.goo.gl/', description: 'URL Файла'})
     urlFile?: string;
 }

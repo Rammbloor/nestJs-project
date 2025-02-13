@@ -14,13 +14,13 @@ export class AuthService {
     }
 
 
-    async login(userDto: CreateUserDto) {
+    public async login(userDto: CreateUserDto) {
         const user = await this.validateUser(userDto)
         return this.generateToken(user)
     }
 
 
-    async registration(userDto: CreateUserDto) {
+    public async registration(userDto: CreateUserDto) {
         const candidate = await this.usersService.getByEmail(userDto.email)
         if (candidate) {
             throw new HttpException('Пользователь с таким email существует!', HttpStatus.BAD_REQUEST);

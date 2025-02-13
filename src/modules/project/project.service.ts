@@ -11,17 +11,17 @@ export class ProjectService {
     constructor(@InjectRepository(Project) private projectRepository: Repository<Project>) {
     }
 
-    async create(createProjectDto: CreateProjectDto, userId: string): Promise<Project> {
+    public async create(createProjectDto: CreateProjectDto, userId: string): Promise<Project> {
 
         const project = this.projectRepository.create({...createProjectDto, ownerId: userId});
         return this.projectRepository.save(project);
     }
 
-    async findAll(): Promise<Project[]> {
+    public async findAll(): Promise<Project[]> {
         return this.projectRepository.find();
     }
 
-    async findById(id: string): Promise<Project> {
+    public async findById(id: string): Promise<Project> {
         const project = await this.projectRepository.findOne({where: {id}, relations: ['tasks']});
         if (!project) {
             throw new NotFoundException(`Project with ID ${id} not found`);
@@ -30,18 +30,15 @@ export class ProjectService {
     }
 
 
-    async findTasks(id: string) {
-        const project = await this.findById(id)
-        return project.tasks
-    }
 
-    async update(id: string, updateProjectDto: UpdateProjectDto): Promise<Project> {
+
+    public async update(id: string, updateProjectDto: UpdateProjectDto): Promise<Project> {
         let project = await this.findById(id)
         project = this.projectRepository.merge(project, updateProjectDto);
         return this.projectRepository.save(project);
     }
 
-    async delete(id: string) {
+    public async delete(id: string) {
         let project = await this.findById(id)
         await this.projectRepository.remove(project);
         return true

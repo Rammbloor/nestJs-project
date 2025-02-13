@@ -1,5 +1,7 @@
 import {ApiProperty} from '@nestjs/swagger';
-import {IsBoolean, IsNotEmpty, IsString} from 'class-validator';
+import {IsBoolean, IsDate, IsDateString, IsNotEmpty, IsOptional, IsString, MinDate} from 'class-validator';
+import {StatusTask} from '../../../common/enums/task-status.enum';
+import {TaskSize} from '../../../common/enums/task-size.enum';
 
 
 export class CreateTaskDto {
@@ -8,23 +10,38 @@ export class CreateTaskDto {
     @IsString()
     title: string;
 
-
     @ApiProperty({example: 'Нужно выполнить это', description: 'Описание задачи'})
     @IsString()
     @IsNotEmpty()
     description: string;
 
-    @ApiProperty({example: 'https://images.app.goo.gl/', description: 'URL фотографии'})
+    @ApiProperty({example: 'S', description: 'Размер задачи'})
+    @IsOptional()
+    size?: TaskSize
+
+    @IsOptional()
+    @IsDateString({}, {message: 'Неверный формат даты'})
+    @MinDate(new Date(), {message: 'Дедлайн должен быть в будущем'})
+    @ApiProperty({example: '2023-01-01', description: 'Дедлайн задачи'})
+    deadline?: string;
+
+    @ApiProperty({example: 'OPEN', description: 'Задача открыта'})
+    @IsOptional()
+    status?: StatusTask
+
+    @ApiProperty({example: 'https://images.app.goo.gl/', description: 'URL файла'})
     @IsString()
-    @IsNotEmpty()
+    @IsOptional()
     urlFile?: string;
 
     @ApiProperty({example: '6e8f4e02-c91c-465f-b22d-7f102fca381b', description: 'id проекта'})
     @IsString()
-    @IsNotEmpty()
+    @IsOptional()
     projectId?: string
 
-    @ApiProperty({example: 'false', description: 'Задача не выполнена'})
-    @IsBoolean()
-    isCompleted?: boolean;
+    @ApiProperty({example: '4e02-c91c-465f-b22d-7f102fc=', description: 'id исполнителя задачи'})
+    @IsString()
+    @IsOptional()
+    assigneeId?: string
+
 }

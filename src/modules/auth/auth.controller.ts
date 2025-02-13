@@ -13,14 +13,14 @@ export class AuthController {
     @ApiOperation({summary: 'Авторизация пользователя'})
     @ApiResponse({status: 200, description: 'Токен пользователя'})
     @Post('/login')
-    login(@Body() userDto: CreateUserDto) {
+    public async login(@Body() userDto: CreateUserDto) {
         return this.authService.login(userDto)
     }
 
     @ApiOperation({summary: 'Регистрация пользователя'})
     @ApiResponse({status: 200, description: 'Пользователь зарегистрирован', type: User})
     @Post('/registration')
-    registration(@Body() userDto: CreateUserDto) {
+    public async registration(@Body() userDto: CreateUserDto) {
         return this.authService.registration(userDto)
 
     }
