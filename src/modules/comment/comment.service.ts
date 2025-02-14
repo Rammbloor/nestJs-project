@@ -2,7 +2,7 @@ import {Injectable, NotFoundException} from '@nestjs/common';
 import {CreateCommentDto} from './dto/create-comment.dto';
 import {UpdateCommentDto} from './dto/update-comment.dto';
 import {InjectRepository} from '@nestjs/typeorm';
-import {Repository} from 'typeorm';
+import {IsNull, Repository} from 'typeorm';
 import {Comment} from './entities/comment.entity';
 import {TaskService} from '../task/task.service';
 
@@ -13,16 +13,16 @@ export class CommentService {
                 @InjectRepository(Comment) private commentRepository: Repository<Comment>) {
     }
 
-    public async create(createCommentDto: CreateCommentDto, userId: string) {
-        const {taskId, parentCommentId} = createCommentDto;
+    public async create(createCommentDto: CreateCommentDto, taskId: string, userId: string) {
+        const {parentId} = createCommentDto;
         const task = await this.taskService.findById(taskId);
         if (!task) {
             throw new NotFoundException('Task not found');
         }
-        let parentComment: Comment | null = null;
-        if (parentCommentId) {
-            parentComment = await this.commentRepository.findOne({where: {id: parentCommentId}});
-            if (!parentComment) {
+        let parent: Comment | null = null;
+        if (parentId) {
+            parent = await this.commentRepository.findOne({where: {id: parentId}});
+            if (!parent) {
                 throw new NotFoundException('Parent comment not found');
             }
         }
@@ -32,6 +32,20 @@ export class CommentService {
 
     public async findAll() {
         return this.commentRepository.find();
+    }
+
+    public async findAllByTaskId(taskId: string, parentId: string | null, offset = 0, limit = 10) {
+        const [comments, total] = await this.commentRepository.findAndCount({
+            where: {
+                task: {id: taskId},
+                parent: parentId ? {id: parentId} : IsNull()
+            },
+            order: {id: 'ASC'},
+            skip: offset,
+            take: limit,
+        });
+
+        return {comments, total, offset, limit,};
     }
 
     public async findById(id: string) {

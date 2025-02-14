@@ -33,8 +33,8 @@ export class Comment {
     text: string;
 
     @ApiProperty({example: '6e8f4e02-c91c-465f-b22d-7f102fca381b', description: 'id родительского комментария'})
-    @Column({name: 'parent_comment_id', nullable: true})
-    parentCommentId: string | null
+    @Column({name: 'parent_id', nullable: true})
+    parentId: string | null
 
     @CreateDateColumn({type: 'timestamp', name: 'created_at'})
     createdAt: Date;
@@ -47,10 +47,10 @@ export class Comment {
     task: Task
 
     @ManyToOne(() => Comment, (comment) => comment.replies, {nullable: true, onDelete: 'CASCADE'})
-    @JoinColumn({name: 'parent_comment_id'})
-    parentComment?: Comment;
+    @JoinColumn({name: 'parent_id'})
+    parent?: Comment;
 
-    @OneToMany(() => Comment, (comment) => comment.parentComment)
+    @OneToMany(() => Comment, (comment) => comment.parent)
     replies: Comment[];
 
     @ManyToOne(() => User, (user) => user.comments)
