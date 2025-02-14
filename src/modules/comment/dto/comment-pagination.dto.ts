@@ -1,5 +1,4 @@
 import {IsOptional, IsInt, Min, IsUUID, Max} from 'class-validator';
-import {Type} from 'class-transformer';
 import {ApiProperty} from '@nestjs/swagger';
 
 export class CommentPaginationDto {
