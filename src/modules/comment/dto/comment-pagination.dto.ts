@@ -1,4 +1,4 @@
-import {IsOptional, IsInt, Min, IsUUID} from 'class-validator';
+import {IsOptional, IsInt, Min, IsUUID, Max} from 'class-validator';
 import {Type} from 'class-transformer';
 import {ApiProperty} from '@nestjs/swagger';
 
@@ -13,6 +13,7 @@ export class CommentPaginationDto {
     @IsOptional()
     @IsInt()
     @Min(1)
+    @Max(10)
     limit?: number;
 
     @ApiProperty({example: '6e8f4e02-c91c-465f-b22d-7f102fca381b', description: 'id родительского комментария'})
