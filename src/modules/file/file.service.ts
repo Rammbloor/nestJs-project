@@ -1,18 +1,18 @@
 import {BadRequestException, Injectable} from '@nestjs/common';
 import {S3} from 'aws-sdk';
-import * as dotenv from 'dotenv';
 import {v4 as uuidv4} from 'uuid';
-dotenv.config();
+import {ConfigService} from '@nestjs/config';
 
 @Injectable()
 export class FileService {
     private s3: S3;
-    constructor() {
+
+    constructor(private configService: ConfigService) {
         this.s3 = new S3({
-            accessKeyId: process.env.B2_ACCESS_KEY_ID,
-            secretAccessKey: process.env.B2_SECRET_ACCESS_KEY,
-            endpoint: process.env.B2_S3_ENDPOINT,
-            region: process.env.B2_REGION,
+            accessKeyId: this.configService.get<string>('B2_ACCESS_KEY_ID') ,
+            secretAccessKey: this.configService.get<string>('B2_SECRET_ACCESS_KEY'),
+            endpoint: this.configService.get<string>('B2_S3_ENDPOINT'),
+            region: this.configService.get<string>('B2_REGION'),
             s3ForcePathStyle: true
         })
     }

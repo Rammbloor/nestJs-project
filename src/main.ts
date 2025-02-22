@@ -1,4 +1,4 @@
-import * as process from 'node:process';
+
 import {NestFactory} from '@nestjs/core';
 import {AppModule} from './app.module';
 import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
@@ -6,12 +6,14 @@ import * as express from 'express';
 import {RateLimitGuard} from './modules/auth/guards/rate-limit.guard';
 import {LoggerService} from './common/logger/winston-logger.service';
 import {AllExceptionsFilter} from './common/filters/all-exceptions.filter';
+import {ConfigService} from '@nestjs/config';
 
 async function start() {
-
-    const Port = process.env.PORT || 3000
-
     const app = await NestFactory.create(AppModule)
+
+    const configService = app.get(ConfigService);
+    const Port = configService.get<number>('PORT') || 3000;
+
     app.useGlobalGuards(new RateLimitGuard())
 
     const logger = app.get(LoggerService);
