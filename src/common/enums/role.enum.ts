@@ -1,6 +1,6 @@
 export enum ROLE {
-    USER = "user",
-    ADMIN = "admin",
+  USER = 'user',
+  ADMIN = 'admin',
 }
 
 export type TRole = typeof ROLE;
